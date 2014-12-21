@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MovieRecommender</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<% if logged? %>
+    <%= link_to 'logout', index_logout_path %>
+<% else %>
+    <%= link_to 'login', index_login_path %>
+<% end %>
+<br/>
+<br/>
+<%= yield %>
+
+</body>
+</html>

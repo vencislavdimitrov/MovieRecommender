@@ -1,0 +1,3 @@
+<% if logged? %>
+    <%= @graph.get_connection('me', 'friends') %>
+<% end %>
