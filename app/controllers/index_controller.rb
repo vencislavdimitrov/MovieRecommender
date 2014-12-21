@@ -28,7 +28,7 @@ class IndexController < ApplicationController
     #Koala::Facebook::OAuth.new(oauth_callback_url).
 
     # redirect to facebook to get your code
-    redirect_to session[:oauth].url_for_oauth_code(:permissions => "user_likes, friends_likes")
+    redirect_to session[:oauth].url_for_oauth_code(:permissions => "user_likes, friends_likes, user_status, read_stream")
 
   end
 
