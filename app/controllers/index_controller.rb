@@ -8,24 +8,19 @@ class IndexController < ApplicationController
   SITE_URL="http://localhost:3000/"
 
   def index
-    # if session['access_token']
-    #   @face='You are logged in! <a href="index/logout">Logout</a>'
-    #   # do some stuff with facebook here
-    #   # for example:
-    #   # @graph = Koala::Facebook::GraphAPI.new(session["access_token"])
-    #   # publish to your wall (if you have the permissions)
-    #   # @graph.put_wall_post("I'm posting from my new cool app!")
-    #   # or publish to someone else (if you have the permissions too ;) )
-    #   # @graph.put_wall_post("Checkout my new cool app!", {}, "someoneelse's id")
-    # else
-    #   @face='<a href="index/login">Login</a>'
-    # end
-
-    # @movies = Movie.get_movies_trust_based(current_user).paginate(:page => params[:page], :per_page => 10)
-    # @movies = Movie.get_movies_collaborative_based(current_user).paginate(:page => params[:page], :per_page => 10)
     @movies = Movie.get_movies_combined(current_user).paginate(:page => params[:page], :per_page => 10)
 
     # Syncer.perform session["access_token"]
+  end
+
+  def trusted
+    @movies = Movie.get_movies_trust_based(current_user).paginate(:page => params[:page], :per_page => 10)
+    render :index
+  end
+
+  def collaborative
+    @movies = Movie.get_movies_collaborative_based(current_user).paginate(:page => params[:page], :per_page => 10)
+    render :index
   end
 
   def login
@@ -70,6 +65,13 @@ class IndexController < ApplicationController
 
   def movie_watched_ajax
     movie = Movie.find_by_fb_id params['movie_id']
+    trusted = Movie.get_movies_trust_based(current_user)
+    collaborative = Movie.get_movies_collaborative_based(current_user)
+    if trusted.index(movie) < collaborative.index(movie)
+      FilterWeight.increment_trusted
+    else
+      FilterWeight.increment_collaborative
+    end
     unless movie.users.where(:id => current_user.id).count > 0
       Movie.update(movie.id, :users => movie.users << current_user)
     end

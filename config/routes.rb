@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get 'index/logout'
   get 'index/callback'
   get 'index/menu'
+  get 'index/trusted'
+  get 'index/collaborative'
   post 'index/movie_watched_ajax'
   root 'index#index'
 

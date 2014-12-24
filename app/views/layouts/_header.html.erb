@@ -1,4 +1,9 @@
 <div class="header-container">
+  <div class="menu">
+    <%= link_to 'Combined filter', index_index_path %>
+    <%= link_to 'Trusted filter', index_trusted_path %>
+    <%= link_to 'Collaborative filter', index_collaborative_path %>
+  </div>
   <div class="content">
     <% if logged? %>
         <span>Welcome, <%= current_user.name %></span>
