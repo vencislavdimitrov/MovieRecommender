@@ -9,9 +9,9 @@
   <div class="content-wrapper">
     <span class="title">
       <% if movie.imdb_id %>
-        <%= link_to movie.name, "http://www.imdb.com/title/tt#{movie.imdb_id}", :target => "_blank" %>
+        <%= link_to movie.title, "http://www.imdb.com/title/tt#{movie.imdb_id}", :target => "_blank" %>
       <% else %>
-        <%= movie.name %>
+        <%= movie.title %>
     <% end %>
     </span>
     <p class="plot"><%= movie.plot %></p>

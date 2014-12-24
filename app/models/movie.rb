@@ -25,7 +25,27 @@ class Movie < ActiveRecord::Base
         order('movie_rank desc')
   end
 
+  def self.get_movies_combined(user)
+    trust = get_movies_trust_based user
+    collaborative = get_movies_collaborative_based user
+    result = []
+    trust.each_with_index do |movie, index|
+      result << movie unless result.include? movie
+      result << collaborative[index] unless result.include? collaborative[index]
+    end
+
+    result
+  end
+
   def poster
     read_attribute(:poster) || ActionController::Base.helpers.asset_path('movie_no_poster.png')
+  end
+
+  def title
+    if release_date.present?
+      "#{name} (#{release_date.year})"
+    else
+      name
+    end
   end
 end

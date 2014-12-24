@@ -21,8 +21,9 @@ class IndexController < ApplicationController
     #   @face='<a href="index/login">Login</a>'
     # end
 
-    # @movies = Movie.get_movies_trust_based(current_user).paginate(:page => params[:page])
-    @movies = Movie.get_movies_collaborative_based(current_user).paginate(:page => params[:page])
+    # @movies = Movie.get_movies_trust_based(current_user).paginate(:page => params[:page], :per_page => 10)
+    # @movies = Movie.get_movies_collaborative_based(current_user).paginate(:page => params[:page], :per_page => 10)
+    @movies = Movie.get_movies_combined(current_user).paginate(:page => params[:page], :per_page => 10)
 
     # Syncer.perform session["access_token"]
   end
