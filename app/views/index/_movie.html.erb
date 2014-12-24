@@ -7,6 +7,7 @@
     <% end %>
   </div>
   <div class="content-wrapper">
+    <span class="watched" data-movie-id="<%= movie.fb_id %>" title="I have watched this one"><%= image_tag 'icon-viewed.png' %></span>
     <span class="title">
       <% if movie.imdb_id %>
         <%= link_to movie.title, "http://www.imdb.com/title/tt#{movie.imdb_id}", :target => "_blank" %>

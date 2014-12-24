@@ -68,98 +68,14 @@ class IndexController < ApplicationController
   #   @ranked_movies = @ranked_movies.slice(5 * (page - 1), 5)
   # end
 
-  def generate_movie_rank
-    myMovies = @graph.get_connection('me', 'movies')
-    myMoviesIds = []
-    myMovies.each do |movie|
-      myMoviesIds << movie['id']
+  def movie_watched_ajax
+    movie = Movie.find_by_fb_id params['movie_id']
+    unless movie.users.where(:id => current_user.id).count > 0
+      Movie.update(movie.id, :users => movie.users << current_user)
     end
-    movies = Movie.where('fb_id not in (?)', myMoviesIds)
-    movies.each do |movie|
-      movie.rank = movie.users.size + movie.users.sum(:rank)
-      movie.save
+    respond_to do |format|
+      format.json  { render :json => '' }
     end
-    redirect_to :root
-  end
-
-  def update_users_rank
-    # me feed
-    statuses = @graph.get_connection('me', 'statuses')
-    statuses.each do |status|
-      if status['likes'].present? and status['likes']['data'].present?
-        status['likes']['data'].each do |like|
-          user = User.find_by(:fb_id => like['id'])
-          if user
-            user.rank = user.rank + 1
-            user.save
-          end
-        end
-      end
-
-      if status['comments'].present? and status['comments']['data'].present?
-        status['comments']['data'].each do |like|
-          user = User.find_by(:fb_id => like['id'])
-          if user
-            user.rank = user.rank + 1
-            user.save
-          end
-        end
-      end
-    end
-
-    myMovies = @graph.get_connection('me', 'movies')
-    myMovies.each do |movie|
-      movie = Movie.find_by(:fb_id => movie['id'])
-      if movie
-        movie.users.each do |user|
-          user.rank = user.rank + 2
-          user.save
-        end
-      end
-    end
-
-    redirect_to :root
-  end
-
-  def update_db
-    friends = @graph.get_connection('me', 'friends')
-    friends.each do |friend|
-      unless User.exists?(:fb_id => friend['id'])
-        user = User.new()
-        user.fb_id = friend['id']
-        user.name = friend['name']
-        user.save
-      else
-        user = User.find_by_fb_id friend['id']
-      end
-
-      friendMovies = @graph.get_connection(friend['id'], 'movies')
-
-      p friendMovies
-
-      friendMovies.each do |friendMovie|
-        unless Movie.exists?(:fb_id => friendMovie['id'])
-          movie = Movie.new()
-          movie.fb_id = friendMovie['id']
-          movie.name = friendMovie['name']
-          movie.users << user
-          movie.save
-        else
-          movie = Movie.find_by(:fb_id => friendMovie['id'])
-          Movie.update(movie.id, :users => movie.users << user)
-        end
-      end
-    end
-
-    redirect_to :root
-
-  end
-
-  def delete_db
-    User.destroy_all
-    Movie.destroy_all
-
-    redirect_to :root
   end
 
   def setup

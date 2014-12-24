@@ -3,15 +3,12 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  get 'index/update_db' => 'index#update_db'
-  get 'index/update_users_rank' => 'index#update_users_rank'
-  get 'index/generate_movie_rank' => 'index#generate_movie_rank'
-  get 'index/delete_db' => 'index#delete_db'
   get 'index/index'
   get 'index/login'
   get 'index/logout'
   get 'index/callback'
   get 'index/menu'
+  post 'index/movie_watched_ajax'
   root 'index#index'
 
   # Example of regular route:
