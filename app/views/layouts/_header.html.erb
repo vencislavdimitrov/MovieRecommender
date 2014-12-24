@@ -1,0 +1,10 @@
+<div class="header-container">
+  <div class="content">
+    <% if logged? %>
+        <span>Welcome, <%= current_user.name %></span>
+        <%= link_to 'logout', index_logout_path %>
+    <% else %>
+        <%= link_to 'login', index_login_path %>
+    <% end %>
+  </div>
+</div>

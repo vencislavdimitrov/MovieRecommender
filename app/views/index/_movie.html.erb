@@ -1,6 +1,19 @@
 <div class="movie-container">
   <div class="poster-container">
-    <img src="<%= movie.poster %>" class="poster">
+    <% if movie.imdb_id %>
+        <%= link_to image_tag(movie.poster, :class => 'poster'), "http://www.imdb.com/title/tt#{movie.imdb_id}", :target => "_blank" %>
+    <% else %>
+        <%= image_tag movie.poster, :class => 'poster' %>
+    <% end %>
   </div>
-  <div><%= movie.name %></div>
+  <div class="content-wrapper">
+    <span class="title">
+      <% if movie.imdb_id %>
+        <%= link_to movie.name, "http://www.imdb.com/title/tt#{movie.imdb_id}", :target => "_blank" %>
+      <% else %>
+        <%= movie.name %>
+    <% end %>
+    </span>
+    <p class="plot"><%= movie.plot %></p>
+  </div>
 </div>

@@ -17,7 +17,12 @@ class Movie < ActiveRecord::Base
   end
 
   def self.get_movies_collaborative_based(user)
-    # TODO
+    Movie.
+        where('movies.id not in (?)', user.movies.pluck(:id)).
+        joins(:users).
+        select('movies.*, (count(*) + movies.rank) as movie_rank').
+        group('movies.id').
+        order('movie_rank desc')
   end
 
   def poster
