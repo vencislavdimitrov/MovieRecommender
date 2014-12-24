@@ -42,3 +42,4 @@ gem "koala", "~> 1.10.0rc"
 gem "imdb"
 gem 'delayed_job_active_record'
 gem 'daemons'
+gem 'will_paginate', '~> 3.0.6'

@@ -1,4 +1,9 @@
 <% if logged? %>
-    <%= current_user.friendships.count %>
-    <!--<%= @graph.get_connection('me', 'friends') %>-->
+    <%= current_user.friendships.count %><br>
+    <% @movies.each do |movie| %>
+        <%= render 'movie', :movie => movie %>
+    <% end %>
+
+    <%= will_paginate @movies %>
+
 <% end %>

@@ -20,6 +20,10 @@ class IndexController < ApplicationController
     # else
     #   @face='<a href="index/login">Login</a>'
     # end
+
+    @movies = Movie.get_movies_trust_based(current_user).paginate(:page => params[:page])
+
+    # Syncer.perform session["access_token"]
   end
 
   def login
