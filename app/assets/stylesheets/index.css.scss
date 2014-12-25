@@ -33,6 +33,10 @@
       font-weight: bold;
       font-size: larger;
       margin-bottom: 15px;
+
+      & a {
+        color: #000;
+      }
     }
 
     .plot {
@@ -73,6 +77,8 @@
       margin: 0px -2px;
       padding: 13px;
       font-weight: bold;
+      text-decoration: none;
+      color: #000;
 
       &.active {
         padding-top: 16px;
@@ -85,4 +91,14 @@
 .main-container {
   width: 980px;
   margin: 20px auto 40px;
+}
+
+em {
+  font-style: normal;
+}
+
+.pagination {
+  & a {
+    color: #000;
+  }
 }
