@@ -1,28 +1,9 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Movie Recommender is a university course project, representing a movie recommender system based on user's facebook profile.
 
-Things you may want to cover:
+= Content
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+The system have 3 main functionalities: recommending a movie bases on collaborative filtering, recommend a movie based
+on trust based fitering and combined method. The combined method uses both collaborative and trust based filtering,
+applying weights depending on the user's feedback.
