@@ -1,8 +1,14 @@
 <div class="header-container">
   <div class="menu">
-    <%= link_to 'Combined filter', index_index_path %>
-    <%= link_to 'Trusted filter', index_trusted_path %>
-    <%= link_to 'Collaborative filter', index_collaborative_path %>
+    <% if logged? %>
+        <%= link_to 'Combined filter', index_combined_path, :class => action_name == 'combined' ? 'active' : '' %>
+        <%= link_to 'Trusted filter', index_trusted_path, :class => action_name == 'trusted' ? 'active' : '' %>
+        <%= link_to 'Collaborative filter', index_collaborative_path, :class => action_name == 'collaborative' ? 'active' : '' %>
+    <% else %>
+        <%= link_to 'Combined filter', '#', :class => action_name == 'combined' ? 'active' : '' %>
+        <%= link_to 'Trusted filter', '#', :class => action_name == 'trusted' ? 'active' : '' %>
+        <%= link_to 'Collaborative filter', '#', :class => action_name == 'collaborative' ? 'active' : '' %>
+    <% end %>
   </div>
   <div class="content">
     <% if logged? %>

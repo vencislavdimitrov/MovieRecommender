@@ -33,7 +33,8 @@ class Movie < ActiveRecord::Base
           joins('inner join friendships on friendships.friend_id = users.id').
           select("movies.*, sum(friendships.rank) as movie_rank").
           group('movies.id').
-          order('movie_rank desc')
+          order('movie_rank desc').
+          limit(200)
     end
 
     def get_movies_collaborative_based(user)
@@ -42,7 +43,8 @@ class Movie < ActiveRecord::Base
           joins(:users).
           select("movies.*, (count(*) + movies.rank) as movie_rank").
           group('movies.id').
-          order('movie_rank desc')
+          order('movie_rank desc').
+          limit(200)
     end
 
     def get_movies_combined(user)

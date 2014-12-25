@@ -4,22 +4,24 @@ class IndexController < ApplicationController
 
   APP_ID="502190246588002"
   APP_SECRET="c704d484ae2be236b6a4999db02a21b9"
-  APP_CODE="XXXX"
   SITE_URL="http://localhost:3000/"
 
   def index
-    @movies = Movie.get_movies_combined(current_user).paginate(:page => params[:page], :per_page => 10)
-
     # Syncer.perform session["access_token"]
   end
 
+  def combined
+    @movies = Movie.get_movies_combined(current_user).paginate(:page => params[:page], :per_page => 10, :total_entries => 300)
+    render :index
+  end
+
   def trusted
-    @movies = Movie.get_movies_trust_based(current_user).paginate(:page => params[:page], :per_page => 10)
+    @movies = Movie.get_movies_trust_based(current_user).paginate(:page => params[:page], :per_page => 10, :total_entries => 300)
     render :index
   end
 
   def collaborative
-    @movies = Movie.get_movies_collaborative_based(current_user).paginate(:page => params[:page], :per_page => 10)
+    @movies = Movie.get_movies_collaborative_based(current_user).paginate(:page => params[:page], :per_page => 10, :total_entries => 300)
     render :index
   end
 
@@ -46,22 +48,8 @@ class IndexController < ApplicationController
     session['access_token'] = oauth.get_access_token(params[:code])
 
     Syncer.delay.perform session["access_token"]
-    redirect_to index_index_path
+    redirect_to index_combined_path
   end
-
-  # def index
-  #   myMovies = @graph.get_connection('me', 'movies')
-  #   myMoviesIds = []
-  #   myMovies.each do |movie|
-  #     myMoviesIds << movie['id']
-  #   end
-  #   @movies = Movie.where('fb_id not in (?)', myMoviesIds)
-  #   @ranked_movies = @movies.order('rank desc')
-  #   page = params[:page].present? ? params[:page].to_i : 1
-  #   page = 1 if page < 1
-  #   page = @ranked_movies.size / 5 if page > @ranked_movies.size / 5
-  #   @ranked_movies = @ranked_movies.slice(5 * (page - 1), 5)
-  # end
 
   def movie_watched_ajax
     movie = Movie.find_by_fb_id params['movie_id']

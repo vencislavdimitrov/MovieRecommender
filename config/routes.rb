@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'index/menu'
   get 'index/trusted'
   get 'index/collaborative'
+  get 'index/combined'
   post 'index/movie_watched_ajax'
   root 'index#index'
 

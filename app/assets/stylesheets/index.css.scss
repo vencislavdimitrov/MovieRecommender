@@ -56,7 +56,7 @@
   border-bottom: 2px solid #CCC;
   margin-bottom: 20px;
   padding: 10px;
-  width: 100%;
+  width: 98%;
   height: 30px;
 
   .content {
@@ -67,6 +67,18 @@
   .menu {
     margin: 10px;
     float: left;
+
+    a {
+      border: 1px solid #ccc;
+      margin: 0px -2px;
+      padding: 13px;
+      font-weight: bold;
+
+      &.active {
+        padding-top: 16px;
+        background-color: #ddd;
+      }
+    }
   }
 }
 
