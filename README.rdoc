@@ -7,3 +7,9 @@ Movie Recommender is a university course project, representing a movie recommend
 The system have 3 main functionalities: recommending a movie bases on collaborative filtering, recommend a movie based
 on trust based fitering and combined method. The combined method uses both collaborative and trust based filtering,
 applying weights depending on the user's feedback.
+
+= Instalation
+
+The system is a Rails application. For runnig it you will need first to install dependencies. Run `bundle install` on the
+root of the repo. The application is using delayed_job gem for async job execution, so second you will need to start a
+delayed_job worker - `bin/delayed_job start`. Last you need to start the application itself - `rails s` would do the job.
