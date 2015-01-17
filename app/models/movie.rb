@@ -1,5 +1,8 @@
+require "open-uri"
 class Movie < ActiveRecord::Base
   has_and_belongs_to_many :users
+  has_attached_file :image
+  validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
 
   def movie_rank(user)
     trusted_rank = users.select(user.friendships).joins('inner join friendships on friendships.friend_id = users.id').pluck('sum(friendships.rank)')[0]
@@ -30,6 +33,10 @@ class Movie < ActiveRecord::Base
     else
       users.order(:rank => :desc).pluck(:name)
     end
+  end
+
+  def poster_from_url(url)
+    self.image = open(url)
   end
 
   class << self

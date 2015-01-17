@@ -43,3 +43,4 @@ gem "imdb"
 gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'will_paginate', '~> 3.0.6'
+gem "paperclip", "~> 4.2"

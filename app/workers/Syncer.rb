@@ -118,6 +118,7 @@ class Syncer
         if imdb_movie && imdb_movie.movies.size > 0
           imdb_movie = imdb_movie.movies[0]
           movie.poster = imdb_movie.poster
+          movie.poster_from_url(imdb_movie.poster)
           movie.plot = imdb_movie.plot_summary
           movie.genres = imdb_movie.genres.join(',').downcase
           movie.imdb_id = imdb_movie.id

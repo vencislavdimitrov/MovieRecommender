@@ -2,9 +2,9 @@ class IndexController < ApplicationController
 
   before_action :setup
 
-  APP_ID="502190246588002"
-  APP_SECRET="c704d484ae2be236b6a4999db02a21b9"
-  SITE_URL="http://localhost:3000/"
+  APP_ID="173755836098113"
+  APP_SECRET="aab1be2291631cb3f26eb77f1a4a40f9"
+  SITE_URL="http://95.87.248.202:3000/"
 
   def index
     # Syncer.perform session["access_token"]

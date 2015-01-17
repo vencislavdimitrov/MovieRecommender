@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141224202605) do
+ActiveRecord::Schema.define(version: 20150117182402) do
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -47,17 +47,21 @@ ActiveRecord::Schema.define(version: 20141224202605) do
   add_index "friendships", ["user_id", "friend_id"], name: "index_friendships_on_user_id_and_friend_id", unique: true, using: :btree
 
   create_table "movies", force: true do |t|
-    t.decimal  "fb_id",        precision: 32, scale: 0
+    t.decimal  "fb_id",              precision: 32, scale: 0
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "rank",                                  default: 0.0
+    t.float    "rank",                                        default: 0.0
     t.string   "poster"
     t.text     "plot"
     t.string   "genres"
     t.string   "imdb_id"
     t.date     "release_date"
     t.string   "cast_members"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "movies_users", id: false, force: true do |t|
