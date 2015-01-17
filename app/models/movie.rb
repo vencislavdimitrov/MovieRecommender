@@ -25,7 +25,11 @@ class Movie < ActiveRecord::Base
   end
 
   def recommended_by_friends_of(current_user)
-    users.where('users.id in (?)', current_user.friendships.pluck(:friend_id)).order(:rank => :desc).pluck(:name)
+    if current_user.present?
+      users.where('users.id in (?)', current_user.friendships.pluck(:friend_id)).order(:rank => :desc).pluck(:name)
+    else
+      users.order(:rank => :desc).pluck(:name)
+    end
   end
 
   class << self
@@ -46,6 +50,15 @@ class Movie < ActiveRecord::Base
           where('movies.id not in (?)', user.movies.pluck(:id)).
           joins(:users).
           select("movies.*, (count(*) + movies.rank) as movie_rank").
+          group('movies.id').
+          order('movie_rank desc').
+          limit(200)
+    end
+
+    def get_movies_collaborative
+      Movie.
+          joins(:users).
+          select("movies.*, count(*) as movie_rank").
           group('movies.id').
           order('movie_rank desc').
           limit(200)

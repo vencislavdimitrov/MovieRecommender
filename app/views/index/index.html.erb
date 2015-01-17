@@ -1,8 +1,10 @@
-<% if logged? %>
-    <% @movies.each do |movie| %>
-        <%= render 'movie', :movie => movie %>
-    <% end %>
-
-    <%= will_paginate @movies %>
-
+<% unless logged? %>
+    <div class="center">
+        In order to view personalized movie recommendations, please <%= link_to 'login', index_login_path %> with your Facebook account.
+    </div>
 <% end %>
+<% @movies.each do |movie| %>
+    <%= render 'movie', :movie => movie %>
+<% end %>
+
+<%= will_paginate @movies %>

@@ -8,7 +8,11 @@ class IndexController < ApplicationController
 
   def index
     # Syncer.perform session["access_token"]
-    redirect_to :index_combined
+    if logged?
+      redirect_to :index_combined
+    else
+      @movies = Movie.get_movies_collaborative.paginate(:page => params[:page], :per_page => 10, :total_entries => 300)
+    end
   end
 
   def combined
