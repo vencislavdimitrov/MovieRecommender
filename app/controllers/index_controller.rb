@@ -8,6 +8,7 @@ class IndexController < ApplicationController
 
   def index
     # Syncer.perform session["access_token"]
+    redirect_to :index_combined
   end
 
   def combined

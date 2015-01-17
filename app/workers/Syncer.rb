@@ -48,40 +48,6 @@ class Syncer
       Friendship.where(:user_id => me.id).update_all(:rank => 0)
 
       Thread.new do
-        statuses = graph.get_connection('me', 'statuses')
-        while statuses.size > 0 do
-          statuses.each do |status|
-            if status['likes'].present? and status['likes']['data'].present?
-              status['likes']['data'].each do |like|
-                user = User.find_by(:fb_id => like['id'])
-                if user
-                  relationship = me.friendships.where(:friend_id => user.id).first
-                  if relationship
-                    relationship.increment :rank
-                    relationship.save
-                  end
-                end
-              end
-            end
-
-            if status['comments'].present? and status['comments']['data'].present?
-              status['comments']['data'].each do |like|
-                user = User.find_by(:fb_id => like['id'])
-                if user
-                  relationship = me.friendships.where(:friend_id => user.id).first
-                  if relationship
-                    relationship.increment :rank
-                    relationship.save
-                  end
-                end
-              end
-            end
-          end
-          statuses = statuses.next_page
-        end
-      end
-
-      Thread.new do
         feeds = graph.get_connection('me', 'feed')
         while feeds.size > 0 do
           feeds.each do |feed|
@@ -91,6 +57,30 @@ class Syncer
               if relationship
                 relationship.increment :rank
                 relationship.save
+              end
+            end
+            if feed['likes'].present? and feed['likes']['data'].present?
+              feed['likes']['data'].each do |like|
+                user = User.find_by(:fb_id => like['id'])
+                if user
+                  relationship = me.friendships.where(:friend_id => user.id).first
+                  if relationship
+                    relationship.increment :rank
+                    relationship.save
+                  end
+                end
+              end
+            end
+            if feed['comments'].present? and feed['comments']['data'].present?
+              feed['comments']['data'].each do |like|
+                user = User.find_by(:fb_id => like['id'])
+                if user
+                  relationship = me.friendships.where(:friend_id => user.id).first
+                  if relationship
+                    relationship.increment :rank
+                    relationship.save
+                  end
+                end
               end
             end
           end
