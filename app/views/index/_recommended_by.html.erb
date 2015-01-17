@@ -1,0 +1,15 @@
+<% friends = movie.recommended_by_friends_of(current_user) %>
+<span class="recommended-by">
+<% if (friends.size == 0) %>
+    None of your friend had watched this movie.
+<% elsif (friends.size == 1) %>
+    Also watched by <%= friends[0] %>
+<% elsif (friends.size == 2) %>
+    Also watched by <%= friends[0] %> and <%= friends[1] %>
+<% elsif (friends.size == 3) %>
+    Also watched by <%= friends[0] %>, <%= friends[1] %> and <%= friends[2] %>
+<% else %>
+    <span>Also watched by <%= friends[0] %>, <%= friends[1] %>, <%= friends[2] %> and <%= link_to "#{(friends.size - 3)} more", 'javascript:;', :name => 'show-more' %></span>
+    <span style="display: none">Also watched by <%= friends.join(', ') %></span>
+<% end %>
+</span>

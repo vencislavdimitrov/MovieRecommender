@@ -14,7 +14,8 @@
       <% else %>
         <%= movie.title %>
     <% end %>
-    </span>
+    </span><br>
+    <%= render 'recommended_by', :movie => movie %>
     <p class="plot"><%= movie.plot %></p>
   </div>
 </div>

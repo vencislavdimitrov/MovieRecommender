@@ -24,6 +24,10 @@ class Movie < ActiveRecord::Base
     read_attribute(:rank) || 0
   end
 
+  def recommended_by_friends_of(current_user)
+    users.where('users.id in (?)', current_user.friendships.pluck(:friend_id)).order(:rank => :desc).pluck(:name)
+  end
+
   class << self
     def get_movies_trust_based(user)
       Movie.
