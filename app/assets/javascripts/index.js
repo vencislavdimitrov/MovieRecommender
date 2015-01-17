@@ -10,10 +10,12 @@ $(document).on('ready', function () {
         });
         $(this).closest('.movie-container').fadeTo(1, 0.3);
     })
+});
 
+var initShowMore = function() {
     $('a[name=show-more]').on('click', function (e) {
         var el = $(this).parent();
         el.hide();
         el.next().show();
     });
-});
+}
