@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150117182402) do
+ActiveRecord::Schema.define(version: 20150214165526) do
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -68,6 +68,10 @@ ActiveRecord::Schema.define(version: 20150117182402) do
     t.integer "movie_id"
     t.integer "user_id"
   end
+
+  add_index "movies_users", ["movie_id", "user_id"], name: "index_movies_users_on_movie_id_and_user_id", using: :btree
+  add_index "movies_users", ["movie_id"], name: "index_movies_users_on_movie_id", using: :btree
+  add_index "movies_users", ["user_id"], name: "index_movies_users_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.decimal  "fb_id",      precision: 32, scale: 0

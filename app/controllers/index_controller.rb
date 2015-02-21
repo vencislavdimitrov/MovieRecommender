@@ -4,7 +4,7 @@ class IndexController < ApplicationController
 
   APP_ID="173755836098113"
   APP_SECRET="aab1be2291631cb3f26eb77f1a4a40f9"
-  SITE_URL="http://95.87.248.202:3000/"
+  SITE_URL="http://localhost:3000/"
 
   def index
     # Syncer.perform session["access_token"]
@@ -60,7 +60,10 @@ class IndexController < ApplicationController
     movie = Movie.find_by_fb_id params['movie_id']
     trusted = Movie.get_movies_trust_based(current_user)
     collaborative = Movie.get_movies_collaborative_based(current_user)
-    if trusted.index(movie) < collaborative.index(movie)
+
+    trusted_index = trusted.index(movie) || 300
+    collaborative_index = collaborative.index(movie) || 300
+    if trusted_index < collaborative_index
       FilterWeight.increment_trusted
     else
       FilterWeight.increment_collaborative

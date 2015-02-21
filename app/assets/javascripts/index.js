@@ -1,5 +1,5 @@
 $(document).on('ready', function () {
-    $('.watched').on('click', function (e) {
+    $('html').on('click', '.watched', function (e) {
         var movieId = $(this).data('movie-id');
         $.ajax({
             type: 'POST',

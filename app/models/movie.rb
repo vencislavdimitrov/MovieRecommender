@@ -36,7 +36,7 @@ class Movie < ActiveRecord::Base
   end
 
   def poster_from_url(url)
-    self.image = open(url)
+    self.image = open(url) unless url.nil?
   end
 
   class << self
